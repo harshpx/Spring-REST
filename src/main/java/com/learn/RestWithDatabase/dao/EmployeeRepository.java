@@ -16,22 +16,26 @@ public class EmployeeRepository {
   public EmployeeRepository(EntityManager entityManager) {
     this.entityManager = entityManager;
   }
-
-  public Employee save(Employee employee) {
+  // create
+  public Employee create(Employee employee) {
     entityManager.persist(employee);
     return employee;
   }
-
-  public List<Employee> getEmployees() {
-    // @SuppressWarnings("unchecked")
-    // List<Employee> employees = entityManager.createNativeQuery("select * from employee", Employee.class).getResultList();
-    // return employees;
+  // read
+  public List<Employee> getAll() {
     TypedQuery<Employee> queryResult = entityManager.createQuery("from Employee", Employee.class);
     List<Employee> employees = queryResult.getResultList();
     return employees;
   }
-
-  public void deleteEmployee(int id) {
+  public Employee get(int id) {
+    return entityManager.find(Employee.class, id);
+  }
+  // update
+  public Employee update(Employee employee) {
+    return entityManager.merge(employee);
+  }
+  // delete
+  public void delete(int id) {
     Employee emp = entityManager.find(Employee.class, id);
     entityManager.remove(emp);
   }
