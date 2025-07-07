@@ -27,4 +27,9 @@ public class EmployeeService {
   public List<Employee> getEmployees() {
     return employeeRepository.getEmployees();
   }
+
+  @Transactional
+  public void deleteEmployee(int id) {
+    employeeRepository.deleteEmployee(id);
+  }
 }

@@ -30,4 +30,9 @@ public class EmployeeRepository {
     List<Employee> employees = queryResult.getResultList();
     return employees;
   }
+
+  public void deleteEmployee(int id) {
+    Employee emp = entityManager.find(Employee.class, id);
+    entityManager.remove(emp);
+  }
 }
