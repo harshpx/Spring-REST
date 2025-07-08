@@ -16,7 +16,7 @@ public class EmployeeRepository {
   public EmployeeRepository(EntityManager entityManager) {
     this.entityManager = entityManager;
   }
-  // create or update
+  // create, update or patch
   public Employee save(Employee employee) {
     Employee newEmployee = entityManager.merge(employee);
     return newEmployee;

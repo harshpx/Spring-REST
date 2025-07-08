@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.learn.RestWithDatabase.customResponses.DataResponse;
 import com.learn.RestWithDatabase.customResponses.MessageResponse;
 import com.learn.RestWithDatabase.dto.CreateEmployeeRequest;
+import com.learn.RestWithDatabase.dto.PatchEmployeeRequest;
 import com.learn.RestWithDatabase.entity.Employee;
 import com.learn.RestWithDatabase.services.EmployeeService;
 
@@ -58,6 +60,14 @@ public class EmployeeController {
   public ResponseEntity<DataResponse<Employee>> updateEmployee(@Valid @RequestBody Employee employee) {
     Employee updatedEmployee = employeeService.updateEmployee(employee);
     DataResponse<Employee> response = new DataResponse<>(updatedEmployee);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+  
+  // patch
+  @PatchMapping
+  public ResponseEntity<DataResponse<Employee>> patchEmployee(@Valid @RequestBody PatchEmployeeRequest employeeData) {
+    Employee patchedEmployee = employeeService.patchEmployee(employeeData);
+    DataResponse<Employee> response = new DataResponse<>(patchedEmployee);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
   

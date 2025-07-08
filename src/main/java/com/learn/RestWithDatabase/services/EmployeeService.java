@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.learn.RestWithDatabase.customExceptions.EmployeeNotFoundException;
 import com.learn.RestWithDatabase.dao.EmployeeRepository;
 import com.learn.RestWithDatabase.dto.CreateEmployeeRequest;
+import com.learn.RestWithDatabase.dto.PatchEmployeeRequest;
 import com.learn.RestWithDatabase.entity.Employee;
 
 import jakarta.transaction.Transactional;
@@ -49,6 +50,22 @@ public class EmployeeService {
       throw new EmployeeNotFoundException();
     }
     return employeeRepository.save(employee);
+  }
+
+  @Transactional
+  public Employee patchEmployee(PatchEmployeeRequest employeeData) {
+    // retrieve existing
+    Employee existingEmployee = employeeRepository.get(employeeData.getId());
+    if (existingEmployee == null) {
+      throw new EmployeeNotFoundException();
+    }
+    // patch fields if exist
+    if (employeeData.getFirstName() != null) existingEmployee.setFirstName(employeeData.getFirstName());
+    if (employeeData.getLastName() != null) existingEmployee.setLastName(employeeData.getLastName());
+    if (employeeData.getEmail() != null) existingEmployee.setEmail(employeeData.getEmail());
+    // Save patched employee
+    Employee patchedEmployee = employeeRepository.save(existingEmployee);
+    return patchedEmployee;
   }
 
   // delete
