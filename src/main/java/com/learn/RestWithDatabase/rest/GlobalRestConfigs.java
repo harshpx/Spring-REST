@@ -2,6 +2,7 @@ package com.learn.RestWithDatabase.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -10,6 +11,13 @@ import com.learn.RestWithDatabase.customResponses.ErrorResponse;
 
 @ControllerAdvice
 public class GlobalRestConfigs {
+  @ExceptionHandler
+  public ResponseEntity<ErrorResponse> handleInvalidPayloadError(MethodArgumentNotValidException excep) {
+    ErrorResponse error = new ErrorResponse();
+    error.setStatus(HttpStatus.BAD_REQUEST.value());
+    error.setMessage("Invalid payload, check all fields");
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
   @ExceptionHandler
   public ResponseEntity<ErrorResponse> handleNotFoundError(EmployeeNotFoundException excep) {
     ErrorResponse error = new ErrorResponse();

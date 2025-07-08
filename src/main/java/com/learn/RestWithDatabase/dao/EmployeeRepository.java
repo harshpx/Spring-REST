@@ -16,10 +16,10 @@ public class EmployeeRepository {
   public EmployeeRepository(EntityManager entityManager) {
     this.entityManager = entityManager;
   }
-  // create
-  public Employee create(Employee employee) {
-    entityManager.persist(employee);
-    return employee;
+  // create or update
+  public Employee save(Employee employee) {
+    Employee newEmployee = entityManager.merge(employee);
+    return newEmployee;
   }
   // read
   public List<Employee> getAll() {
@@ -29,10 +29,6 @@ public class EmployeeRepository {
   }
   public Employee get(int id) {
     return entityManager.find(Employee.class, id);
-  }
-  // update
-  public Employee update(Employee employee) {
-    return entityManager.merge(employee);
   }
   // delete
   public void delete(int id) {

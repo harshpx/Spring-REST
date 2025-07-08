@@ -1,12 +1,13 @@
 package com.learn.RestWithDatabase.entity;
 
-import com.learn.RestWithDatabase.dto.EmployeeRequest;
+import com.learn.RestWithDatabase.dto.CreateEmployeeRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +22,11 @@ public class Employee {
   @Column(name = "id")
   private int id;
 
+  @NotBlank(message = "First name is required")
   @Column(name = "firstName")
   private String firstName;
 
+  @NotBlank(message = "Last name is required")
   @Column(name = "lastName")
   private String lastName;
 
@@ -32,7 +35,8 @@ public class Employee {
 
   // constructors
   public Employee() {}
-  public Employee(EmployeeRequest employeeData) {
+  public Employee(CreateEmployeeRequest employeeData) {
+    this.setId(0);
     this.firstName = employeeData.getFirstName();
     this.lastName = employeeData.getLastName();
     this.email = employeeData.getEmail();

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.learn.RestWithDatabase.customExceptions.EmployeeNotFoundException;
 import com.learn.RestWithDatabase.dao.EmployeeRepository;
-import com.learn.RestWithDatabase.dto.EmployeeRequest;
+import com.learn.RestWithDatabase.dto.CreateEmployeeRequest;
 import com.learn.RestWithDatabase.entity.Employee;
 
 import jakarta.transaction.Transactional;
@@ -21,12 +21,14 @@ public class EmployeeService {
     this.employeeRepository = employeeRepository;
   }
 
+  // create
   @Transactional
-  public Employee createEmployee(EmployeeRequest employeeData) {
+  public Employee createEmployee(CreateEmployeeRequest employeeData) {
     Employee newEmployee = new Employee(employeeData);
-    return employeeRepository.create(newEmployee);
+    return employeeRepository.save(newEmployee);
   }
 
+  // read
   public List<Employee> getEmployees() {
     return employeeRepository.getAll();
   }
@@ -39,18 +41,17 @@ public class EmployeeService {
     return emp;
   }
 
+  //update
   @Transactional
-  public Employee updateEmployee(int id, EmployeeRequest employeeData) {
-    Employee existingEmployee = employeeRepository.get(id);
+  public Employee updateEmployee(Employee employee) {
+    Employee existingEmployee = employeeRepository.get(employee.getId());
     if (existingEmployee == null) {
       throw new EmployeeNotFoundException();
     }
-    existingEmployee.setFirstName(employeeData.getFirstName());
-    existingEmployee.setLastName(employeeData.getLastName());
-    existingEmployee.setEmail(employeeData.getEmail());
-    return employeeRepository.update(existingEmployee);
+    return employeeRepository.save(employee);
   }
 
+  // delete
   @Transactional
   public void deleteEmployee(int id) {
     employeeRepository.delete(id);

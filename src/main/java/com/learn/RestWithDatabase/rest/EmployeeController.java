@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.learn.RestWithDatabase.customResponses.DataResponse;
 import com.learn.RestWithDatabase.customResponses.MessageResponse;
-import com.learn.RestWithDatabase.dto.EmployeeRequest;
+import com.learn.RestWithDatabase.dto.CreateEmployeeRequest;
 import com.learn.RestWithDatabase.entity.Employee;
 import com.learn.RestWithDatabase.services.EmployeeService;
 
@@ -32,19 +32,20 @@ public class EmployeeController {
     this.employeeService = employeeService;
   }
 
+  // create
   @PostMapping
-  public ResponseEntity<DataResponse<Employee>> createEmployee(@Valid @RequestBody EmployeeRequest employeeData) {
+  public ResponseEntity<DataResponse<Employee>> createEmployee(@Valid @RequestBody CreateEmployeeRequest employeeData) {
     Employee savedEmployee = employeeService.createEmployee(employeeData);
     DataResponse<Employee> response = new DataResponse<>(savedEmployee);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
+  // read
   @GetMapping
   public ResponseEntity<DataResponse<List<Employee>>> getEmployees() {
     DataResponse<List<Employee>> response = new DataResponse<>(employeeService.getEmployees());
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
-
   @GetMapping("/{employeeId}")
   public ResponseEntity<DataResponse<Employee>> getEmployee(@PathVariable int employeeId) {
     Employee emp = employeeService.getEmployee(employeeId);
@@ -52,16 +53,15 @@ public class EmployeeController {
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
-  @PutMapping("/{employeeId}")
-  public ResponseEntity<DataResponse<Employee>> updateEmployee(
-    @PathVariable int employeeId, 
-    @RequestBody EmployeeRequest employeeData
-  ) {
-    Employee updatedEmployee = employeeService.updateEmployee(employeeId, employeeData);
+  // update
+  @PutMapping
+  public ResponseEntity<DataResponse<Employee>> updateEmployee(@Valid @RequestBody Employee employee) {
+    Employee updatedEmployee = employeeService.updateEmployee(employee);
     DataResponse<Employee> response = new DataResponse<>(updatedEmployee);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
-
+  
+  // delete
   @DeleteMapping("/{employeeId}")
   public ResponseEntity<MessageResponse> deleteEmployee(@PathVariable int employeeId) {
     employeeService.deleteEmployee(employeeId);
