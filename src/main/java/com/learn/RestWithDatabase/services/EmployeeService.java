@@ -31,11 +31,11 @@ public class EmployeeService {
 
   // read
   public List<Employee> getEmployees() {
-    return employeeRepository.getAll();
+    return employeeRepository.findAll();
   }
 
   public Employee getEmployee(int id) {
-    Employee emp = employeeRepository.get(id);
+    Employee emp = employeeRepository.findById(id);
     if (emp == null) {
       throw new EmployeeNotFoundException();
     }
@@ -45,7 +45,7 @@ public class EmployeeService {
   //update
   @Transactional
   public Employee updateEmployee(Employee employee) {
-    Employee existingEmployee = employeeRepository.get(employee.getId());
+    Employee existingEmployee = employeeRepository.findById(employee.getId());
     if (existingEmployee == null) {
       throw new EmployeeNotFoundException();
     }
@@ -55,7 +55,7 @@ public class EmployeeService {
   @Transactional
   public Employee patchEmployee(PatchEmployeeRequest employeeData) {
     // retrieve existing
-    Employee existingEmployee = employeeRepository.get(employeeData.getId());
+    Employee existingEmployee = employeeRepository.findById(employeeData.getId());
     if (existingEmployee == null) {
       throw new EmployeeNotFoundException();
     }

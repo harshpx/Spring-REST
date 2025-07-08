@@ -22,12 +22,12 @@ public class EmployeeRepository {
     return newEmployee;
   }
   // read
-  public List<Employee> getAll() {
+  public List<Employee> findAll() {
     TypedQuery<Employee> queryResult = entityManager.createQuery("from Employee", Employee.class);
     List<Employee> employees = queryResult.getResultList();
     return employees;
   }
-  public Employee get(int id) {
+  public Employee findById(int id) {
     return entityManager.find(Employee.class, id);
   }
   // delete
