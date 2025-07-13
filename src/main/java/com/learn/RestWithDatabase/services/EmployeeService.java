@@ -17,6 +17,7 @@ import jakarta.transaction.Transactional;
 public class EmployeeService {
 
   private EmployeeRepository employeeRepository;
+
   @Autowired
   public EmployeeService(EmployeeRepository employeeRepository) {
     this.employeeRepository = employeeRepository;
@@ -42,7 +43,7 @@ public class EmployeeService {
     return emp;
   }
 
-  //update
+  // update
   @Transactional
   public Employee updateEmployee(Employee employee) {
     Employee existingEmployee = employeeRepository.findById(employee.getId());
@@ -53,16 +54,19 @@ public class EmployeeService {
   }
 
   @Transactional
-  public Employee patchEmployee(PatchEmployeeRequest employeeData) {
+  public Employee patchEmployee(int employeeId, PatchEmployeeRequest employeeData) {
     // retrieve existing
-    Employee existingEmployee = employeeRepository.findById(employeeData.getId());
+    Employee existingEmployee = employeeRepository.findById(employeeId);
     if (existingEmployee == null) {
       throw new EmployeeNotFoundException();
     }
     // patch fields if exist
-    if (employeeData.getFirstName() != null) existingEmployee.setFirstName(employeeData.getFirstName());
-    if (employeeData.getLastName() != null) existingEmployee.setLastName(employeeData.getLastName());
-    if (employeeData.getEmail() != null) existingEmployee.setEmail(employeeData.getEmail());
+    if (employeeData.getFirstName() != null)
+      existingEmployee.setFirstName(employeeData.getFirstName());
+    if (employeeData.getLastName() != null)
+      existingEmployee.setLastName(employeeData.getLastName());
+    if (employeeData.getEmail() != null)
+      existingEmployee.setEmail(employeeData.getEmail());
     // Save patched employee
     Employee patchedEmployee = employeeRepository.save(existingEmployee);
     return patchedEmployee;
