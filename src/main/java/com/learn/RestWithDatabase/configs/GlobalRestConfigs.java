@@ -1,4 +1,4 @@
-package com.learn.RestWithDatabase.rest;
+package com.learn.RestWithDatabase.configs;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

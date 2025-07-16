@@ -14,8 +14,15 @@ public class RestWithDatabaseApplication {
 
 	@Bean
 	public CommandLineRunner commandLineRunner() {
-		return runner -> {
-			System.out.println("API is running!");
+		CommandLineRunner runner = new CommandLineRunner() {
+			@Override
+			public void run(String... args) throws Exception {
+				System.out.println("API is running!");
+			}
 		};
+		return runner;
+		// return runner -> {
+		// 	System.out.println("API is running!");
+		// };
 	}
 }
