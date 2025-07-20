@@ -1,7 +1,5 @@
 package com.learn.RestWithDatabase.entity;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,9 +20,8 @@ public class User {
   @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
   private int id;
   
-  @Column(name = "username")
+  @Column(name = "username", unique = true)
   @NotNull(message = "Username is required")
-  @UniqueElements(message = "Username must be unique")
   private String username;
 
   @Column(name = "password")
@@ -33,6 +30,7 @@ public class User {
 
   public User() {}
   public User(String username, String password) {
+    this.id = 0;
     this.username = username;
     this.password = password;
   }
