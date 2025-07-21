@@ -37,14 +37,6 @@ public class SecurityConfigs {
         .build();
   }
 
-  // @Bean
-  // public UserDetailsService userDetailsService() {
-  // UserDetails user1 = User.withDefaultPasswordEncoder()
-  // .username("harsh")
-  // .password("h@123")
-  // .build();
-  // return new InMemoryUserDetailsManager(user1);
-  // }
   @Bean
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
