@@ -34,3 +34,7 @@ build/
 
 ### Application Properties ###
 src/main/resources/secrets.properties
+
+### Docker saved images ###
+*.tar
+*.tar.gz
